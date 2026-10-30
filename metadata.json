@@ -1,0 +1,8 @@
+{
+  "name": "CaixaPro SaaS - Gestão & Fechamento de Caixa para Bares",
+  "description": "Plataforma SaaS em nuvem multi-tenant de fechamento de caixa, conciliação e OCR por IA para bares e restaurantes de Curitiba com painel master e cobrança automatizada.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

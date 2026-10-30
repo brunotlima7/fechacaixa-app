@@ -1,0 +1,1013 @@
+{
+  "tenants": [
+    {
+      "id": "tenant_flordebrasa",
+      "slug": "flordebrasa",
+      "name": "Flor de Brasa - Bar & Brasa",
+      "cnpj": "38.921.442/0001-55",
+      "city": "Curitiba - PR",
+      "address": "R. Comendador Araújo, 450 - Batel",
+      "phone": "(41) 99882-1917",
+      "contactEmail": "gerencia@flordebrasa.com.br",
+      "plan": "pro",
+      "monthlyPrice": 249,
+      "status": "ativo",
+      "expiresAt": "2026-11-17T18:18:44.491Z",
+      "createdAt": "2026-07-25T18:18:44.491Z",
+      "logoInitials": "FB",
+      "logoColor": "from-orange-500 to-amber-500",
+      "notes": "Cliente flagship em Curitiba com integração Getnet e Jclan."
+    },
+    {
+      "id": "tenant_bardovictor",
+      "slug": "bardovictor",
+      "name": "Bar do Victor - São Lourenço",
+      "cnpj": "76.104.923/0001-88",
+      "city": "Curitiba - PR",
+      "address": "R. Lívio Moreira, 284 - São Lourenço",
+      "phone": "(41) 3353-4419",
+      "contactEmail": "financeiro@bardovictor.com.br",
+      "plan": "pro",
+      "monthlyPrice": 249,
+      "status": "ativo",
+      "expiresAt": "2026-11-10T18:18:44.491Z",
+      "createdAt": "2026-08-24T18:18:44.491Z",
+      "logoInitials": "BV",
+      "logoColor": "from-blue-600 to-cyan-500",
+      "notes": "Frutos do mar e petiscos tradicionais de Curitiba."
+    },
+    {
+      "id": "tenant_babilonia",
+      "slug": "babilonia",
+      "name": "Babilônia Gastronomia",
+      "cnpj": "04.819.330/0001-20",
+      "city": "Curitiba - PR",
+      "address": "Al. Dom Pedro II, 541 - Batel",
+      "phone": "(41) 3566-6464",
+      "contactEmail": "caixa@babilonia.com.br",
+      "plan": "enterprise",
+      "monthlyPrice": 399,
+      "status": "ativo",
+      "expiresAt": "2026-11-14T18:18:44.491Z",
+      "createdAt": "2026-09-08T18:18:44.491Z",
+      "logoInitials": "BG",
+      "logoColor": "from-purple-600 to-indigo-500",
+      "notes": "Operação 24 horas e múltiplos turnos de caixa diários."
+    },
+    {
+      "id": "tenant_tajbar",
+      "slug": "tajbar",
+      "name": "Taj Bar Curitiba",
+      "cnpj": "11.455.772/0001-31",
+      "city": "Curitiba - PR",
+      "address": "R. Bispo Dom José, 2302 - Batel",
+      "phone": "(41) 3343-4467",
+      "contactEmail": "financeiro@tajbarcuritiba.com.br",
+      "plan": "pro",
+      "monthlyPrice": 249,
+      "status": "bloqueado",
+      "expiresAt": "2026-11-22T18:18:55.521Z",
+      "createdAt": "2026-06-25T18:18:44.491Z",
+      "logoInitials": "TB",
+      "logoColor": "from-amber-600 to-red-600",
+      "notes": "Mensalidade atrasada há 3 dias. Acesso suspenso até confirmação do Pix."
+    }
+  ],
+  "menus": {
+    "tenant_flordebrasa": [
+      {
+        "name": "Caldinho de Feijão (Happy Hour)",
+        "price": 9.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Chopp Brahma (Happy Hour)",
+        "price": 11.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Caipirinha (Happy Hour)",
+        "price": 19.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Estrella Galicia (Happy Hour)",
+        "price": 21.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Aperol Spritz (Happy Hour)",
+        "price": 22.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Margarita (Happy Hour)",
+        "price": 24.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Batata Frita (Happy Hour)",
+        "price": 27.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Pastel de Queijo (Happy Hour)",
+        "price": 29.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Bolinho de Carne (Happy Hour)",
+        "price": 32.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Dadinhos de Tapioca (Happy Hour)",
+        "price": 34.9,
+        "cat": "Happy Hour"
+      },
+      {
+        "name": "Combo Botequim",
+        "price": 54.9,
+        "cat": "Combos Especiais"
+      },
+      {
+        "name": "Combo Onça",
+        "price": 59.9,
+        "cat": "Combos Especiais"
+      },
+      {
+        "name": "Combo Brasa",
+        "price": 69.9,
+        "cat": "Combos Especiais"
+      },
+      {
+        "name": "Combo Torresmo",
+        "price": 69.9,
+        "cat": "Combos Especiais"
+      },
+      {
+        "name": "Água Mineral",
+        "price": 7.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Refrigerante",
+        "price": 8.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Café Especial na Prensa Francesa",
+        "price": 8.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Soda Italiana",
+        "price": 13.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Chá Mate Batido",
+        "price": 14.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Chá Mate da Casa",
+        "price": 15.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Suco Natural",
+        "price": 16.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Red Bull",
+        "price": 19.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Acqua Panna (505ml)",
+        "price": 38.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "San Pellegrino (505ml)",
+        "price": 38.9,
+        "cat": "Bebidas Não Alcoólicas"
+      },
+      {
+        "name": "Drink Verbena (Sem Álcool)",
+        "price": 21.9,
+        "cat": "Drinks Sem Álcool"
+      },
+      {
+        "name": "Drink Bromélia (Sem Álcool)",
+        "price": 22.9,
+        "cat": "Drinks Sem Álcool"
+      },
+      {
+        "name": "Drink Dália (Sem Álcool)",
+        "price": 29.9,
+        "cat": "Drinks Sem Álcool"
+      },
+      {
+        "name": "Drink Acácia (Sem Álcool)",
+        "price": 31.9,
+        "cat": "Drinks Sem Álcool"
+      },
+      {
+        "name": "Chopp Brahma (300ml)",
+        "price": 14.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Sol Zero (330ml)",
+        "price": 16.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Heineken Zero (330ml)",
+        "price": 16.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Heineken Long Neck (330ml)",
+        "price": 17.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Corona (330ml)",
+        "price": 17.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Stella Artois Pure Gold (330ml)",
+        "price": 17.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Therezópolis Jade IPA (500ml)",
+        "price": 23.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Therezópolis Elfenbein Weissbier (500ml)",
+        "price": 23.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Estrella Galicia (600ml)",
+        "price": 24.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Original (600ml)",
+        "price": 25.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Heineken (600ml)",
+        "price": 26.9,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Caipirinha Semente de Fogo",
+        "price": 31.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Fruto do Sol",
+        "price": 32.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Pé de Jabuticaba",
+        "price": 32.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Frutos da Brasa",
+        "price": 34.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Morango",
+        "price": 27.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Limão Taiti",
+        "price": 27.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Limão Descascado",
+        "price": 28.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Maracujá",
+        "price": 29.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Abacaxi",
+        "price": 29.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Caipirinha Três Limões com Rapadura",
+        "price": 29.9,
+        "cat": "Caipirinhas"
+      },
+      {
+        "name": "Coquetel Gardenia",
+        "price": 34.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Calêndula",
+        "price": 35.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Orquídea",
+        "price": 36.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Jasmim",
+        "price": 36.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Girassol",
+        "price": 37.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Rosa",
+        "price": 38.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Azaléia",
+        "price": 38.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Terroso",
+        "price": 39.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Lírio",
+        "price": 39.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Flor de Brasa",
+        "price": 39.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Lótus",
+        "price": 39.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Violeta",
+        "price": 42.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Coquetel Magnólia",
+        "price": 46.9,
+        "cat": "Coquetéis Autorais"
+      },
+      {
+        "name": "Mojito",
+        "price": 33.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Bellini",
+        "price": 34.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "French Martini",
+        "price": 34.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Moscow Mule",
+        "price": 34.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Dry Martini",
+        "price": 35.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Whisky Sour",
+        "price": 35.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Gin Tônica",
+        "price": 36.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Aperol Spritz",
+        "price": 37.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Kir Royal",
+        "price": 37.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Penicillin",
+        "price": 37.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Cosmopolitan",
+        "price": 39.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Fitzgerald",
+        "price": 39.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Negroni",
+        "price": 39.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Paloma",
+        "price": 39.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Bramble",
+        "price": 40.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Long Island Iced Tea",
+        "price": 40.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Old Fashioned",
+        "price": 43.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Margarita",
+        "price": 43.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Clover Club",
+        "price": 49.9,
+        "cat": "Coquetéis Clássicos"
+      },
+      {
+        "name": "Caldinho de Feijão",
+        "price": 14.9,
+        "cat": "Clássicos de Botequim"
+      },
+      {
+        "name": "Batata Frita",
+        "price": 34.9,
+        "cat": "Clássicos de Botequim"
+      },
+      {
+        "name": "Pastel de Queijo (6 un)",
+        "price": 38.9,
+        "cat": "Clássicos de Botequim"
+      },
+      {
+        "name": "Dadinhos de Tapioca (4 un)",
+        "price": 39.9,
+        "cat": "Clássicos de Botequim"
+      },
+      {
+        "name": "Bolinho de Carne Defumada (8 un)",
+        "price": 39.9,
+        "cat": "Clássicos de Botequim"
+      },
+      {
+        "name": "Torresmo Pururuca",
+        "price": 44.9,
+        "cat": "Clássicos de Botequim"
+      },
+      {
+        "name": "Toast de Shiitake",
+        "price": 34.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Caprese (Releitura)",
+        "price": 37.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Carne de Onça (4 un)",
+        "price": 39.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Carpaccio",
+        "price": 39.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Salada Caesar",
+        "price": 39.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Salada Verde",
+        "price": 39.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Steak Tartare de Brioche",
+        "price": 41.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Polvo com Romesco",
+        "price": 69.9,
+        "cat": "Crudos, Toasts & Frescos"
+      },
+      {
+        "name": "Croquete de Carne (4 un)",
+        "price": 34.9,
+        "cat": "Assinaturas da Casa"
+      },
+      {
+        "name": "Mini Pastéis de Milho & Gorgonzola (6 un)",
+        "price": 36.9,
+        "cat": "Assinaturas da Casa"
+      },
+      {
+        "name": "Mil-Folhas de Mandioca",
+        "price": 39.9,
+        "cat": "Assinaturas da Casa"
+      },
+      {
+        "name": "Moules Frites",
+        "price": 39.9,
+        "cat": "Assinaturas da Casa"
+      },
+      {
+        "name": "Linguiça de Pernil & Queijo Coalho",
+        "price": 42.9,
+        "cat": "Assinaturas da Casa"
+      },
+      {
+        "name": "Adicional de Salada",
+        "price": 3,
+        "cat": "Burgers"
+      },
+      {
+        "name": "Burger",
+        "price": 39.9,
+        "cat": "Burgers"
+      },
+      {
+        "name": "Burger Vegetariano",
+        "price": 39.9,
+        "cat": "Burgers"
+      },
+      {
+        "name": "Burger do Chef",
+        "price": 44.9,
+        "cat": "Burgers"
+      },
+      {
+        "name": "Burger Serrano",
+        "price": 46.9,
+        "cat": "Burgers"
+      },
+      {
+        "name": "Baião de Dois com Costelinha",
+        "price": 84.9,
+        "cat": "Principais Individuais"
+      },
+      {
+        "name": "Filé Oswaldo Aranha",
+        "price": 89.9,
+        "cat": "Principais Individuais"
+      },
+      {
+        "name": "Costela Desfiada & Prensada",
+        "price": 89.9,
+        "cat": "Principais Individuais"
+      },
+      {
+        "name": "Arroz de Pato",
+        "price": 99.9,
+        "cat": "Principais Individuais"
+      },
+      {
+        "name": "Galeto na Brasa com Polenta (2 pessoas)",
+        "price": 139.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Prime Rib Suíno (2 a 3 pessoas)",
+        "price": 149.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Costela Bovina (2 pessoas)",
+        "price": 159.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Assado de Tiras (2 pessoas)",
+        "price": 169.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Ancho na Brasa (2 pessoas)",
+        "price": 189.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Bisteca Fiorentina (2 pessoas)",
+        "price": 199.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Fraldinha na Brasa com Mostarda (2 pessoas)",
+        "price": 199.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Alcatrão de Igreja (2 a 3 pessoas)",
+        "price": 249.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Costela Bovina (4 pessoas)",
+        "price": 249.9,
+        "cat": "Para Compartilhar"
+      },
+      {
+        "name": "Banoffee",
+        "price": 21.9,
+        "cat": "Sobremesas"
+      },
+      {
+        "name": "Brigadeiro de Colher",
+        "price": 22.9,
+        "cat": "Sobremesas"
+      },
+      {
+        "name": "Cartola",
+        "price": 24.9,
+        "cat": "Sobremesas"
+      },
+      {
+        "name": "Brownie da Casa",
+        "price": 24.9,
+        "cat": "Sobremesas"
+      },
+      {
+        "name": "Petit Gâteau Brasileiro",
+        "price": 26.9,
+        "cat": "Sobremesas"
+      },
+      {
+        "name": "Tiramisu",
+        "price": 26.9,
+        "cat": "Sobremesas"
+      },
+      {
+        "name": "Couvert Artístico",
+        "price": 6,
+        "cat": "Taxas e Serviços"
+      },
+      {
+        "name": "Taxa Rolha de Vinho",
+        "price": 40,
+        "cat": "Taxas e Serviços"
+      },
+      {
+        "name": "Taxa Rolha Destilados",
+        "price": 70,
+        "cat": "Taxas e Serviços"
+      }
+    ],
+    "tenant_bardovictor": [
+      {
+        "name": "Bolinho de Bacalhau (6 un)",
+        "price": 42,
+        "cat": "Petiscos"
+      },
+      {
+        "name": "Camarão à Milanesa Victor",
+        "price": 89.9,
+        "cat": "Petiscos"
+      },
+      {
+        "name": "Casquinha de Siri",
+        "price": 26,
+        "cat": "Entradas"
+      },
+      {
+        "name": "Pastel de Camarão (4 un)",
+        "price": 36,
+        "cat": "Petiscos"
+      },
+      {
+        "name": "Chopp Pilsen (300ml)",
+        "price": 13.9,
+        "cat": "Bebidas"
+      },
+      {
+        "name": "Caipirinha Cachaça Especial",
+        "price": 28,
+        "cat": "Drinks"
+      },
+      {
+        "name": "Moqueca de Peixe e Camarão",
+        "price": 148,
+        "cat": "Pratos Principais"
+      },
+      {
+        "name": "Água Mineral",
+        "price": 7.5,
+        "cat": "Bebidas"
+      },
+      {
+        "name": "Refrigerante",
+        "price": 8.5,
+        "cat": "Bebidas"
+      },
+      {
+        "name": "Couvert Artístico",
+        "price": 6,
+        "cat": "Serviços"
+      }
+    ],
+    "tenant_babilonia": [
+      {
+        "name": "Carpaccio Clássico Babilônia",
+        "price": 45,
+        "cat": "Entradas"
+      },
+      {
+        "name": "Filé Mignon ao Poivre",
+        "price": 82,
+        "cat": "Pratos"
+      },
+      {
+        "name": "Batata Frita Rústica",
+        "price": 32,
+        "cat": "Petiscos"
+      },
+      {
+        "name": "Chopp Stella Artois (300ml)",
+        "price": 16,
+        "cat": "Bebidas"
+      },
+      {
+        "name": "Aperol Spritz Babilônia",
+        "price": 36,
+        "cat": "Coquetéis"
+      },
+      {
+        "name": "Gin Tônica Curitiba Botanicals",
+        "price": 38,
+        "cat": "Coquetéis"
+      },
+      {
+        "name": "Água Mineral",
+        "price": 7.9,
+        "cat": "Bebidas"
+      },
+      {
+        "name": "Brownie com Sorvete",
+        "price": 26,
+        "cat": "Sobremesas"
+      },
+      {
+        "name": "Taxa de Serviço",
+        "price": 10,
+        "cat": "Serviços"
+      }
+    ],
+    "tenant_tajbar": [
+      {
+        "name": "Sashimi Misto Taj (12 cortes)",
+        "price": 68,
+        "cat": "Japonês"
+      },
+      {
+        "name": "Uramaki Salmão Especial (8 un)",
+        "price": 44,
+        "cat": "Japonês"
+      },
+      {
+        "name": "Dumpling de Porco & Gengibre",
+        "price": 38,
+        "cat": "Entradas"
+      },
+      {
+        "name": "Drink Taj Dragon (Autoral)",
+        "price": 42,
+        "cat": "Drinks"
+      },
+      {
+        "name": "Moscow Mule Taj",
+        "price": 38,
+        "cat": "Drinks"
+      },
+      {
+        "name": "Heineken Long Neck",
+        "price": 18,
+        "cat": "Cervejas"
+      },
+      {
+        "name": "Red Bull Energy Drink",
+        "price": 22,
+        "cat": "Bebidas"
+      },
+      {
+        "name": "Taxa Entrada / Couvert",
+        "price": 20,
+        "cat": "Serviços"
+      }
+    ]
+  },
+  "users": {
+    "tenant_flordebrasa": [
+      {
+        "id": 1,
+        "tenantId": "tenant_flordebrasa",
+        "name": "bruno",
+        "pin": "1917",
+        "isAdmin": true
+      },
+      {
+        "id": 2,
+        "tenantId": "tenant_flordebrasa",
+        "name": "camila",
+        "pin": "1234",
+        "isAdmin": false
+      },
+      {
+        "id": 3,
+        "tenantId": "tenant_flordebrasa",
+        "name": "barbara",
+        "pin": "1234",
+        "isAdmin": false
+      },
+      {
+        "id": 4,
+        "tenantId": "tenant_flordebrasa",
+        "name": "vini",
+        "pin": "1234",
+        "isAdmin": false
+      },
+      {
+        "id": 5,
+        "tenantId": "tenant_flordebrasa",
+        "name": "fernando",
+        "pin": "lixo",
+        "isAdmin": false
+      }
+    ],
+    "tenant_bardovictor": [
+      {
+        "id": 101,
+        "tenantId": "tenant_bardovictor",
+        "name": "victor",
+        "pin": "1234",
+        "isAdmin": true
+      },
+      {
+        "id": 102,
+        "tenantId": "tenant_bardovictor",
+        "name": "lucas",
+        "pin": "1234",
+        "isAdmin": false
+      }
+    ],
+    "tenant_babilonia": [
+      {
+        "id": 201,
+        "tenantId": "tenant_babilonia",
+        "name": "marcos",
+        "pin": "1234",
+        "isAdmin": true
+      },
+      {
+        "id": 202,
+        "tenantId": "tenant_babilonia",
+        "name": "patricia",
+        "pin": "1234",
+        "isAdmin": false
+      }
+    ],
+    "tenant_tajbar": [
+      {
+        "id": 301,
+        "tenantId": "tenant_tajbar",
+        "name": "rodrigo",
+        "pin": "1234",
+        "isAdmin": true
+      }
+    ]
+  },
+  "closings": {
+    "tenant_flordebrasa": [
+      {
+        "id": 1792693124491,
+        "tenantId": "tenant_flordebrasa",
+        "date": "22/10/2026 23:45",
+        "operator": "bruno",
+        "getnet": 8450,
+        "jclan": 8450,
+        "diff": 0,
+        "cashDiff": 0,
+        "report": "📊 FECHAMENTO DE CAIXA - Flor de Brasa\n📅 Data: 22/10/2026 às 23:45\n👤 Operador: BRUNO\n\n💳 CARTÕES: R$ 8.450,00 (Batendo 100%!)\n💵 GAVETA: R$ 1.280,00 (Batendo 100%!)",
+        "createdAt": "2026-10-22T18:18:44.491Z"
+      },
+      {
+        "id": 1792606724491,
+        "tenantId": "tenant_flordebrasa",
+        "date": "21/10/2026 23:30",
+        "operator": "camila",
+        "getnet": 6320.5,
+        "jclan": 6320.5,
+        "diff": 0,
+        "cashDiff": 0,
+        "report": "📊 FECHAMENTO DE CAIXA - Flor de Brasa\n📅 Data: 21/10/2026 às 23:30\n👤 Operador: CAMILA\n\n💳 CARTÕES: R$ 6.320,50\n💵 GAVETA: R$ 940,00",
+        "createdAt": "2026-10-21T18:18:44.491Z"
+      }
+    ],
+    "tenant_bardovictor": [
+      {
+        "id": 1792693124491,
+        "tenantId": "tenant_bardovictor",
+        "date": "22/10/2026 23:15",
+        "operator": "victor",
+        "getnet": 5890,
+        "jclan": 5890,
+        "diff": 0,
+        "cashDiff": 0,
+        "report": "📊 FECHAMENTO DE CAIXA - Bar do Victor\nData: 22/10/2026\nTotal Cartões: R$ 5.890,00",
+        "createdAt": "2026-10-22T18:18:44.491Z"
+      }
+    ]
+  },
+  "invoices": [
+    {
+      "id": "inv_fb_01",
+      "tenantId": "tenant_flordebrasa",
+      "amount": 249,
+      "dueDate": "2026-11-17",
+      "status": "paga",
+      "pixCode": "00020126580014br.gov.bcb.pix0136caixacerto-cwb@banco.com5204000053039865406249.005802BR5915CAIXA CERTO SAAS6008CURITIBA62070503***6304E8A1",
+      "boletoBarcode": "34191.79001 01043.510047 91020.150008 4 92830000024900",
+      "paidAt": "2026-10-18T18:18:44.491Z",
+      "description": "Assinatura Caixa Certo Pro - Mensalidade Novembro/2026",
+      "createdAt": "2026-10-17T18:18:44.491Z"
+    },
+    {
+      "id": "inv_taj_01",
+      "tenantId": "tenant_tajbar",
+      "amount": 249,
+      "dueDate": "2026-10-20",
+      "status": "paga",
+      "pixCode": "00020126580014br.gov.bcb.pix0136tajbar-cwb@banco.com5204000053039865406249.005802BR5915CAIXA CERTO SAAS6008CURITIBA62070503***6304FA92",
+      "boletoBarcode": "34191.79001 01043.510047 91020.150008 4 92830000024900",
+      "description": "Assinatura Caixa Certo Pro - Mensalidade Outubro/2026 (Em Atraso)",
+      "createdAt": "2026-10-08T18:18:44.491Z",
+      "paidAt": "2026-10-23T18:18:55.521Z"
+    }
+  ],
+  "masterPin": "master2026",
+  "masterOwner": {
+    "name": "Bruno Lima",
+    "email": "brunotlima7@gmail.com",
+    "pin": "master2026",
+    "phone": "(41) 99882-1917",
+    "isConfigured": true,
+    "updatedAt": "2026-10-26T14:31:56.979Z"
+  }
+}
