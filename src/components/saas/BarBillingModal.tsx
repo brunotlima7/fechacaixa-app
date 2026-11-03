@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, CreditCard, QrCode, Copy, CheckCircle2, AlertTriangle, ShieldCheck, RefreshCw, Calendar, Sparkles } from 'lucide-react';
-import { Tenant, Invoice } from '../../types/saas.ts';
+import { X, CreditCard, QrCode, Copy, CheckCircle2, AlertTriangle, ShieldCheck, RefreshCw, Calendar, Sparkles, ArrowUpRight } from 'lucide-react';
+import { Tenant, Invoice, PLAN_DETAILS, PLAN_PRICING } from '../../types/saas.ts';
 
 interface BarBillingModalProps {
   isOpen: boolean;
@@ -9,6 +9,7 @@ interface BarBillingModalProps {
   invoices: Invoice[];
   onConfirmPayment: (invoiceId: string) => Promise<void>;
   onShowToast: (msg: string) => void;
+  onOpenUpgradeModal?: () => void;
 }
 
 export const BarBillingModal: React.FC<BarBillingModalProps> = ({
@@ -18,6 +19,7 @@ export const BarBillingModal: React.FC<BarBillingModalProps> = ({
   invoices,
   onConfirmPayment,
   onShowToast,
+  onOpenUpgradeModal,
 }) => {
   const [copiedKey, setCopiedKey] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -115,12 +117,25 @@ export const BarBillingModal: React.FC<BarBillingModalProps> = ({
                 </p>
               </div>
 
-              <div className="text-right">
+              <div className="text-right flex flex-col items-end">
                 <span className="text-xs block opacity-75">Plano Contratado</span>
-                <span className="text-base font-extrabold uppercase bg-white/70 px-2.5 py-1 rounded-lg border border-current inline-block mt-0.5">
-                  {tenant.plan}
+                <span className="text-sm font-extrabold uppercase bg-white/80 dark:bg-slate-900/80 px-2.5 py-1 rounded-lg border border-current inline-block mt-0.5">
+                  {PLAN_DETAILS[tenant.plan]?.name || tenant.plan}
                 </span>
-                <span className="text-xs font-bold block mt-1">{formatBRL(tenant.monthlyPrice)} / mês</span>
+                <span className="text-xs font-bold block mt-1">
+                  {formatBRL(PLAN_PRICING[tenant.plan || 'pro'] || tenant.monthlyPrice || 200)} / mês
+                </span>
+                {onOpenUpgradeModal && (
+                  <button
+                    type="button"
+                    onClick={onOpenUpgradeModal}
+                    className="mt-2 text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-lg border border-amber-600 shadow-xs flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
+                    title="Mudar de plano: Essencial R$ 150, Pro IA R$ 200 ou VIP R$ 300"
+                  >
+                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-950" />
+                    <span>Mudar de Plano (R$ 150 / R$ 200 / R$ 300)</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>

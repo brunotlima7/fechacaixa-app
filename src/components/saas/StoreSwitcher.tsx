@@ -26,9 +26,17 @@ export const StoreSwitcher: React.FC<StoreSwitcherProps> = ({
         className="flex items-center gap-2 bg-slate-800/90 hover:bg-slate-700/90 text-white px-3 py-1.5 rounded-xl border border-slate-700 transition-all text-xs font-bold shadow-sm"
       >
         <div
-          className={`w-5 h-5 rounded-md bg-gradient-to-tr ${currentTenant.logoColor} flex items-center justify-center font-black text-[10px] text-white shadow-xs`}
+          className={`w-6 h-6 rounded-md bg-gradient-to-tr ${currentTenant.logoColor} flex items-center justify-center font-black text-[10px] text-white shadow-xs overflow-hidden shrink-0`}
         >
-          {currentTenant.logoInitials}
+          {currentTenant.logoAvatarUrl ? (
+            <img
+              src={currentTenant.logoAvatarUrl}
+              alt={currentTenant.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            currentTenant.logoInitials
+          )}
         </div>
         <div className="flex flex-col text-left">
           <span className="leading-tight truncate max-w-[140px] sm:max-w-[200px]">{currentTenant.name}</span>
@@ -62,9 +70,13 @@ export const StoreSwitcher: React.FC<StoreSwitcherProps> = ({
                   >
                     <div className="flex items-center gap-2.5">
                       <div
-                        className={`w-6 h-6 rounded-md bg-gradient-to-tr ${t.logoColor} text-white font-black text-[10px] flex items-center justify-center`}
+                        className={`w-6 h-6 rounded-md bg-gradient-to-tr ${t.logoColor} text-white font-black text-[10px] flex items-center justify-center overflow-hidden shrink-0`}
                       >
-                        {t.logoInitials}
+                        {t.logoAvatarUrl ? (
+                          <img src={t.logoAvatarUrl} alt={t.name} className="w-full h-full object-cover" />
+                        ) : (
+                          t.logoInitials
+                        )}
                       </div>
                       <div>
                         <span className="text-xs block leading-tight">{t.name}</span>

@@ -10,13 +10,18 @@
       "phone": "(41) 99882-1917",
       "contactEmail": "gerencia@flordebrasa.com.br",
       "plan": "pro",
-      "monthlyPrice": 249,
+      "monthlyPrice": 200,
       "status": "ativo",
       "expiresAt": "2026-11-17T18:18:44.491Z",
       "createdAt": "2026-07-25T18:18:44.491Z",
       "logoInitials": "FB",
       "logoColor": "from-orange-500 to-amber-500",
-      "notes": "Cliente flagship em Curitiba com integração Getnet e Jclan."
+      "notes": "Cliente flagship em Curitiba com integração Getnet e Jclan.",
+      "loginBgImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1920&q=80",
+      "themeColor": "orange",
+      "primaryColor": "#ea580c",
+      "pdvSystemName": "Jclan",
+      "cardSystemName": "Getnet"
     },
     {
       "id": "tenant_bardovictor",
@@ -28,13 +33,18 @@
       "phone": "(41) 3353-4419",
       "contactEmail": "financeiro@bardovictor.com.br",
       "plan": "pro",
-      "monthlyPrice": 249,
+      "monthlyPrice": 200,
       "status": "ativo",
       "expiresAt": "2026-11-10T18:18:44.491Z",
       "createdAt": "2026-08-24T18:18:44.491Z",
       "logoInitials": "BV",
       "logoColor": "from-blue-600 to-cyan-500",
-      "notes": "Frutos do mar e petiscos tradicionais de Curitiba."
+      "notes": "Frutos do mar e petiscos tradicionais de Curitiba.",
+      "loginBgImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80",
+      "themeColor": "blue",
+      "primaryColor": "#0284c7",
+      "pdvSystemName": "Totvs Chef",
+      "cardSystemName": "Cielo"
     },
     {
       "id": "tenant_babilonia",
@@ -46,13 +56,18 @@
       "phone": "(41) 3566-6464",
       "contactEmail": "caixa@babilonia.com.br",
       "plan": "enterprise",
-      "monthlyPrice": 399,
+      "monthlyPrice": 300,
       "status": "ativo",
       "expiresAt": "2026-11-14T18:18:44.491Z",
       "createdAt": "2026-09-08T18:18:44.491Z",
       "logoInitials": "BG",
       "logoColor": "from-purple-600 to-indigo-500",
-      "notes": "Operação 24 horas e múltiplos turnos de caixa diários."
+      "notes": "Operação 24 horas e múltiplos turnos de caixa diários.",
+      "loginBgImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80",
+      "themeColor": "purple",
+      "primaryColor": "#7c3aed",
+      "pdvSystemName": "Colibri",
+      "cardSystemName": "Stone"
     },
     {
       "id": "tenant_tajbar",
@@ -64,13 +79,18 @@
       "phone": "(41) 3343-4467",
       "contactEmail": "financeiro@tajbarcuritiba.com.br",
       "plan": "pro",
-      "monthlyPrice": 249,
+      "monthlyPrice": 200,
       "status": "bloqueado",
       "expiresAt": "2026-11-22T18:18:55.521Z",
       "createdAt": "2026-06-25T18:18:44.491Z",
       "logoInitials": "TB",
       "logoColor": "from-amber-600 to-red-600",
-      "notes": "Mensalidade atrasada há 3 dias. Acesso suspenso até confirmação do Pix."
+      "notes": "Mensalidade atrasada há 3 dias. Acesso suspenso até confirmação do Pix.",
+      "loginBgImage": "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1920&q=80",
+      "themeColor": "amber",
+      "primaryColor": "#d97706",
+      "pdvSystemName": "Zig",
+      "cardSystemName": "Rede"
     }
   ],
   "menus": {
@@ -936,6 +956,18 @@
   "closings": {
     "tenant_flordebrasa": [
       {
+        "date": "30/10/2026 23:50",
+        "operator": "camila",
+        "getnet": 5000,
+        "jclan": 5000,
+        "diff": 0,
+        "cashDiff": 0,
+        "report": "teste",
+        "id": 1793460341369,
+        "tenantId": "tenant_flordebrasa",
+        "createdAt": "2026-10-31T15:25:41.369Z"
+      },
+      {
         "id": 1792693124491,
         "tenantId": "tenant_flordebrasa",
         "date": "22/10/2026 23:45",
@@ -945,7 +977,90 @@
         "diff": 0,
         "cashDiff": 0,
         "report": "📊 FECHAMENTO DE CAIXA - Flor de Brasa\n📅 Data: 22/10/2026 às 23:45\n👤 Operador: BRUNO\n\n💳 CARTÕES: R$ 8.450,00 (Batendo 100%!)\n💵 GAVETA: R$ 1.280,00 (Batendo 100%!)",
-        "createdAt": "2026-10-22T18:18:44.491Z"
+        "createdAt": "2026-10-22T18:18:44.491Z",
+        "auditTrail": [
+          {
+            "id": "seed_fb1_9",
+            "timestamp": "23:45:02",
+            "operator": "bruno",
+            "category": "sistema",
+            "action": "Fechamento de Caixa Salvo",
+            "details": "Fechamento salvo por bruno em 12 min 25s (Diferença Cartões: R$ 0,00, Gaveta: R$ 0,00)"
+          },
+          {
+            "id": "seed_fb1_8",
+            "timestamp": "23:43:18",
+            "operator": "bruno",
+            "category": "zeramento",
+            "action": "Marcou opção para fechamento final (Crédito)",
+            "details": "1ª Opção: Comanda Paga COM 10% (Taxa de Serviço) -> ✂️ Exclua da comanda reaberta: [2x Chopp Brahma 300ml]. ✨ Zera 100% no centavo exato no Jclan!"
+          },
+          {
+            "id": "seed_fb1_7",
+            "timestamp": "23:42:05",
+            "operator": "bruno",
+            "category": "comanda",
+            "action": "Adicionou item na Comanda Reaberta (Crédito)",
+            "details": "2x Chopp Brahma 300ml (R$ 29,80) simulados para conciliação"
+          },
+          {
+            "id": "seed_fb1_6",
+            "timestamp": "23:40:12",
+            "operator": "bruno",
+            "category": "pdv",
+            "action": "Preencheu Totais no Jclan (Crédito, Débito, Pix e Voucher)",
+            "details": "Crédito: R$ 4.820,00 | Débito: R$ 1.940,00 | Pix: R$ 1.310,00 | Voucher: R$ 380,00 (Total PDV: R$ 8.450,00)"
+          },
+          {
+            "id": "seed_fb1_5",
+            "timestamp": "23:38:44",
+            "operator": "bruno",
+            "category": "cartoes",
+            "action": "Preencheu Voucher (Alelo e Ticket) na Máquina #2",
+            "details": "Alelo: R$ 230,00 | Ticket: R$ 150,00"
+          },
+          {
+            "id": "seed_fb1_4",
+            "timestamp": "23:37:10",
+            "operator": "bruno",
+            "category": "cartoes",
+            "action": "Leitura OCR Maquininha #1 e #2 (Getnet)",
+            "details": "Comprovantes analisados e valores preenchidos via IA (Total Getnet: R$ 8.450,00)"
+          },
+          {
+            "id": "seed_fb1_3",
+            "timestamp": "23:35:22",
+            "operator": "bruno",
+            "category": "gaveta",
+            "action": "Preencheu Fundo de Abertura e Vendas Dinheiro no Jclan",
+            "details": "Abertura: R$ 300,00 | Vendas Dinheiro Jclan: R$ 1.130,00 | Sangrias/Pagamentos: R$ 150,00"
+          },
+          {
+            "id": "seed_fb1_2",
+            "timestamp": "23:34:05",
+            "operator": "bruno",
+            "category": "gaveta",
+            "action": "Contagem física de Notas e Moedas na Gaveta",
+            "details": "Notas (R$ 100, R$ 50, R$ 20, R$ 10) e moedas conferidas -> Total Físico: R$ 1.280,00"
+          },
+          {
+            "id": "seed_fb1_1",
+            "timestamp": "23:32:10",
+            "operator": "bruno",
+            "category": "sistema",
+            "action": "Login de Operador",
+            "details": "Operador bruno iniciou a sessão de caixa às 23:32"
+          }
+        ],
+        "selectedExclusionOptions": {
+          "Crédito": {
+            "title": "1ª Opção: Comanda Paga COM 10% (Taxa de Serviço)",
+            "instruction": "✂️ Exclua da comanda reaberta: [2x Chopp Brahma 300ml]. ✨ Zera 100% no centavo exato no Jclan (R$ 0,00 de desconto)!",
+            "diff": 0,
+            "optionIndex": 0,
+            "optionKey": "exc-0"
+          }
+        }
       },
       {
         "id": 1792606724491,
@@ -957,7 +1072,66 @@
         "diff": 0,
         "cashDiff": 0,
         "report": "📊 FECHAMENTO DE CAIXA - Flor de Brasa\n📅 Data: 21/10/2026 às 23:30\n👤 Operador: CAMILA\n\n💳 CARTÕES: R$ 6.320,50\n💵 GAVETA: R$ 940,00",
-        "createdAt": "2026-10-21T18:18:44.491Z"
+        "createdAt": "2026-10-21T18:18:44.491Z",
+        "auditTrail": [
+          {
+            "id": "seed_fb2_6",
+            "timestamp": "23:30:00",
+            "operator": "camila",
+            "category": "sistema",
+            "action": "Fechamento de Caixa Salvo",
+            "details": "Fechamento salvo por camila em 8 min 40s (Diferença Cartões: R$ 0,00, Gaveta: R$ 0,00)"
+          },
+          {
+            "id": "seed_fb2_5",
+            "timestamp": "23:28:40",
+            "operator": "camila",
+            "category": "zeramento",
+            "action": "Marcou opção para fechamento final (Débito)",
+            "details": "Nova Comanda: 1x Batata Frita (SEM 10%) -> Lance na nova comanda no Jclan: 1x Batata Frita (R$ 34,90) e desative os 10% de serviço."
+          },
+          {
+            "id": "seed_fb2_4",
+            "timestamp": "23:26:15",
+            "operator": "camila",
+            "category": "pdv",
+            "action": "Preencheu valores de Crédito, Débito, Pix e Voucher no Jclan",
+            "details": "Total conferido no relatório Jclan: R$ 6.320,50"
+          },
+          {
+            "id": "seed_fb2_3",
+            "timestamp": "23:24:50",
+            "operator": "camila",
+            "category": "cartoes",
+            "action": "Preencheu Máquinas Getnet (#1 a #3)",
+            "details": "Crédito, Débito, Pix e Vouchers digitados (Total Getnet: R$ 6.320,50)"
+          },
+          {
+            "id": "seed_fb2_2",
+            "timestamp": "23:22:30",
+            "operator": "camila",
+            "category": "gaveta",
+            "action": "Contagem de Notas, Moedas e Abertura da Gaveta",
+            "details": "Total físico contado na gaveta: R$ 940,00 (100% conciliado)"
+          },
+          {
+            "id": "seed_fb2_1",
+            "timestamp": "23:21:20",
+            "operator": "camila",
+            "category": "sistema",
+            "action": "Login de Operador",
+            "details": "Operador camila iniciou a sessão de caixa às 23:21"
+          }
+        ],
+        "selectedExclusionOptions": {
+          "Débito": {
+            "title": "Nova Comanda: 1x Batata Frita (SEM 10%)",
+            "instruction": "Lance na nova comanda no Jclan: 1x Batata Frita (R$ 34,90) e desative os 10% de serviço. ✨ Zera 100% no centavo exato!",
+            "diff": 0,
+            "optionIndex": 0,
+            "optionKey": "nova-0"
+          }
+        }
       }
     ],
     "tenant_bardovictor": [
@@ -971,7 +1145,41 @@
         "diff": 0,
         "cashDiff": 0,
         "report": "📊 FECHAMENTO DE CAIXA - Bar do Victor\nData: 22/10/2026\nTotal Cartões: R$ 5.890,00",
-        "createdAt": "2026-10-22T18:18:44.491Z"
+        "createdAt": "2026-10-22T18:18:44.491Z",
+        "auditTrail": [
+          {
+            "id": "seed_bv1_4",
+            "timestamp": "23:15:00",
+            "operator": "victor",
+            "category": "sistema",
+            "action": "Fechamento de Caixa Salvo",
+            "details": "Fechamento salvo por victor em 10 min 10s (Diferença Cartões: R$ 0,00, Gaveta: R$ 0,00)"
+          },
+          {
+            "id": "seed_bv1_3",
+            "timestamp": "23:11:30",
+            "operator": "victor",
+            "category": "pdv",
+            "action": "Preencheu Totvs Chef (Crédito, Débito, Pix e Voucher)",
+            "details": "Total lançado no sistema PDV: R$ 5.890,00"
+          },
+          {
+            "id": "seed_bv1_2",
+            "timestamp": "23:08:15",
+            "operator": "victor",
+            "category": "cartoes",
+            "action": "Conferência das 4 maquininhas Cielo",
+            "details": "Valores de Crédito, Débito e Pix preenchidos (Total: R$ 5.890,00)"
+          },
+          {
+            "id": "seed_bv1_1",
+            "timestamp": "23:04:50",
+            "operator": "victor",
+            "category": "sistema",
+            "action": "Login de Operador",
+            "details": "Operador victor iniciou a sessão de caixa às 23:04"
+          }
+        ]
       }
     ]
   },

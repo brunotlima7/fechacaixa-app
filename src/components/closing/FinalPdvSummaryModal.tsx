@@ -13,7 +13,8 @@ import {
   ShieldCheck,
   Check,
   UploadCloud,
-  HelpCircle
+  HelpCircle,
+  Download
 } from 'lucide-react';
 import { Tenant } from '../../types/saas.ts';
 import { formatCurrency } from '../../App.tsx';
@@ -40,8 +41,11 @@ interface FinalPdvSummaryModalProps {
     voucher: { card: number; pdv: number };
     cash: { physical: number; expected: number };
   };
+  creditBreakdown?: Array<{ name: string; amount: number }>;
+  debitBreakdown?: Array<{ name: string; amount: number }>;
   voucherBreakdown?: Array<{ name: string; amount: number }>;
   onProceedToSaveClosing: () => void;
+  onDownloadPdf?: () => void;
   onShowToast: (msg: string) => void;
 }
 
@@ -56,13 +60,16 @@ export const FinalPdvSummaryModal: React.FC<FinalPdvSummaryModalProps> = ({
   cashTotal,
   expectedCash,
   totals,
+  creditBreakdown = [],
+  debitBreakdown = [],
   voucherBreakdown = [],
   onProceedToSaveClosing,
+  onDownloadPdf,
   onShowToast,
 }) => {
   const [hasConfirmedInPdv, setHasConfirmedInPdv] = useState<boolean | null>(null);
-  const pdvName = tenant.pdvSystemName || 'Jclan';
-  const cardName = tenant.cardSystemName || 'Getnet';
+  const pdvName = tenant.pdvSystemName || 'PDV';
+  const cardName = tenant.cardSystemName || 'Maquininhas';
   const theme = getTheme(tenant.themeColor);
 
   if (!isOpen) return null;
@@ -92,7 +99,17 @@ export const FinalPdvSummaryModal: React.FC<FinalPdvSummaryModalProps> = ({
 
     text += `📊 3. VALORES FINAIS QUE DEVEM CONSTAR NO ${pdvName}:\n`;
     text += `  • Crédito: ${formatCurrency(totals.credit.card)}\n`;
+    if (creditBreakdown.length > 0) {
+      creditBreakdown.forEach((cb) => {
+        text += `     ↳ ${cb.name}: ${formatCurrency(cb.amount)}\n`;
+      });
+    }
     text += `  • Débito: ${formatCurrency(totals.debit.card)}\n`;
+    if (debitBreakdown.length > 0) {
+      debitBreakdown.forEach((db) => {
+        text += `     ↳ ${db.name}: ${formatCurrency(db.amount)}\n`;
+      });
+    }
     text += `  • Pix: ${formatCurrency(totals.pix.card)}\n`;
     text += `  • Voucher Total: ${formatCurrency(totals.voucher.card)}\n`;
     if (voucherBreakdown.length > 0) {
@@ -162,6 +179,16 @@ export const FinalPdvSummaryModal: React.FC<FinalPdvSummaryModalProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            {onDownloadPdf && (
+              <button
+                onClick={onDownloadPdf}
+                className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                title="Baixar relatório completo de fechamento de caixa em PDF"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Baixar PDF</span>
+              </button>
+            )}
             <button
               onClick={handleCopySummary}
               className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer"
@@ -295,17 +322,65 @@ export const FinalPdvSummaryModal: React.FC<FinalPdvSummaryModalProps> = ({
               <span>3. Valores Finais Esperados no Relatório do {pdvName}</span>
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-              <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center">
-                <span className="text-[10px] font-bold text-blue-400 uppercase block">Crédito</span>
-                <span className="text-xs sm:text-sm font-black text-white mt-0.5 block truncate">
-                  {formatCurrency(totals.credit.card)}
-                </span>
+              <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center flex flex-col justify-between">
+                <div>
+                  <span className="text-[10px] font-bold text-blue-400 uppercase block">Crédito</span>
+                  <span className="text-xs sm:text-sm font-black text-white mt-0.5 block truncate">
+                    {formatCurrency(totals.credit.card)}
+                  </span>
+                </div>
+                {creditBreakdown.length > 0 && (
+                  <div className="mt-2 pt-1.5 border-t border-slate-800/80 space-y-1 text-left">
+                    <span className="text-[9px] font-extrabold text-blue-300 uppercase block tracking-wider text-center">
+                      Bandeiras ({pdvName}):
+                    </span>
+                    <div className="space-y-0.5 max-h-28 overflow-y-auto pr-0.5">
+                      {creditBreakdown.map((cb, cIdx) => (
+                        <div
+                          key={cIdx}
+                          className="flex items-center justify-between text-[10px] bg-slate-950/70 px-1.5 py-0.5 rounded border border-slate-800/70"
+                        >
+                          <span className="text-slate-300 font-semibold truncate max-w-[70px]" title={cb.name}>
+                            {cb.name}
+                          </span>
+                          <span className={`font-mono font-bold ${cb.amount > 0 ? 'text-blue-300' : 'text-slate-500'}`}>
+                            {formatCurrency(cb.amount)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center">
-                <span className="text-[10px] font-bold text-orange-400 uppercase block">Débito</span>
-                <span className="text-xs sm:text-sm font-black text-white mt-0.5 block truncate">
-                  {formatCurrency(totals.debit.card)}
-                </span>
+              <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center flex flex-col justify-between">
+                <div>
+                  <span className="text-[10px] font-bold text-orange-400 uppercase block">Débito</span>
+                  <span className="text-xs sm:text-sm font-black text-white mt-0.5 block truncate">
+                    {formatCurrency(totals.debit.card)}
+                  </span>
+                </div>
+                {debitBreakdown.length > 0 && (
+                  <div className="mt-2 pt-1.5 border-t border-slate-800/80 space-y-1 text-left">
+                    <span className="text-[9px] font-extrabold text-orange-300 uppercase block tracking-wider text-center">
+                      Bandeiras ({pdvName}):
+                    </span>
+                    <div className="space-y-0.5 max-h-28 overflow-y-auto pr-0.5">
+                      {debitBreakdown.map((db, dIdx) => (
+                        <div
+                          key={dIdx}
+                          className="flex items-center justify-between text-[10px] bg-slate-950/70 px-1.5 py-0.5 rounded border border-slate-800/70"
+                        >
+                          <span className="text-slate-300 font-semibold truncate max-w-[70px]" title={db.name}>
+                            {db.name}
+                          </span>
+                          <span className={`font-mono font-bold ${db.amount > 0 ? 'text-orange-300' : 'text-slate-500'}`}>
+                            {formatCurrency(db.amount)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center">
                 <span className="text-[10px] font-bold text-teal-400 uppercase block">Pix</span>

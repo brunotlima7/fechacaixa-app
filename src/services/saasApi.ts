@@ -1,4 +1,4 @@
-import { Tenant, MenuItem, TenantUser, HistoryRecord, Invoice, MasterStats, MasterOwnerProfile } from '../types/saas.ts';
+import { Tenant, MenuItem, TenantUser, HistoryRecord, Invoice, MasterStats, MasterOwnerProfile, ActiveShiftDraft } from '../types/saas.ts';
 
 
 export const saasApi = {
@@ -37,6 +37,35 @@ export const saasApi = {
     return await res.json();
   },
 
+  async syncTenants(
+    tenants: Tenant[],
+    usersByTenant?: Record<string, TenantUser[]>,
+    menusByTenant?: Record<string, MenuItem[]>,
+    closingsByTenant?: Record<string, HistoryRecord[]>,
+    deletedTenantIds?: string[],
+    deletedClosingIdsByTenant?: Record<string, number[]>
+  ): Promise<Tenant[]> {
+    try {
+      const res = await fetch('/api/tenants/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tenants,
+          usersByTenant,
+          menusByTenant,
+          closingsByTenant,
+          deletedTenantIds,
+          deletedClosingIdsByTenant,
+        }),
+      });
+      if (!res.ok) throw new Error('Falha ao sincronizar bares');
+      return await res.json();
+    } catch (e) {
+      console.warn('Erro ao chamar /api/tenants/sync:', e);
+      return tenants;
+    }
+  },
+
   async updateTenant(id: string, updates: Partial<Tenant>): Promise<Tenant> {
     const res = await fetch(`/api/tenants/${id}`, {
       method: 'PUT',
@@ -53,6 +82,17 @@ export const saasApi = {
     });
     if (!res.ok) throw new Error('Erro ao alterar status de bloqueio');
     return await res.json();
+  },
+
+  async deleteTenant(id: string): Promise<boolean> {
+    try {
+      const res = await fetch(`/api/tenants/${id}`, {
+        method: 'DELETE',
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
   },
 
   // --- CARDÁPIOS ---
@@ -106,7 +146,7 @@ export const saasApi = {
     }
   },
 
-  async saveClosing(tenantId: string, record: Omit<HistoryRecord, 'id' | 'createdAt'>): Promise<HistoryRecord> {
+  async saveClosing(tenantId: string, record: Partial<HistoryRecord>): Promise<HistoryRecord> {
     const res = await fetch(`/api/tenants/${tenantId}/closings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -116,11 +156,68 @@ export const saasApi = {
     return await res.json();
   },
 
+  async syncTenantClosings(
+    tenantId: string,
+    closings: HistoryRecord[],
+    deletedIds?: number[]
+  ): Promise<HistoryRecord[]> {
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/closings/sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ closings, deletedIds }),
+      });
+      if (!res.ok) return closings;
+      return await res.json();
+    } catch {
+      return closings;
+    }
+  },
+
   async deleteClosing(tenantId: string, closingId: number): Promise<boolean> {
     const res = await fetch(`/api/tenants/${tenantId}/closings/${closingId}`, {
       method: 'DELETE',
     });
     return res.ok;
+  },
+
+  // --- RASCUNHO DE TURNO EM TEMPO REAL (CELULAR <-> PC) ---
+  async getDraft(tenantId: string): Promise<{ draft: ActiveShiftDraft | null; connectedDevices: Array<{ deviceId: string; deviceType: 'mobile' | 'desktop'; operator: string }> }> {
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/draft`);
+      if (!res.ok) return { draft: null, connectedDevices: [] };
+      return await res.json();
+    } catch {
+      return { draft: null, connectedDevices: [] };
+    }
+  },
+
+  async saveDraft(tenantId: string, draft: Partial<ActiveShiftDraft>): Promise<{ draft: ActiveShiftDraft | null; connectedDevices: Array<{ deviceId: string; deviceType: 'mobile' | 'desktop'; operator: string }> }> {
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/draft`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(draft),
+      });
+      if (!res.ok) return { draft: null, connectedDevices: [] };
+      return await res.json();
+    } catch {
+      return { draft: null, connectedDevices: [] };
+    }
+  },
+
+  async clearDraft(tenantId: string, deviceId?: string, updatedBy?: string): Promise<boolean> {
+    try {
+      const params = new URLSearchParams();
+      if (deviceId) params.set('deviceId', deviceId);
+      if (updatedBy) params.set('updatedBy', updatedBy);
+      const res = await fetch(`/api/tenants/${tenantId}/draft?${params.toString()}`, {
+        method: 'DELETE',
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
   },
 
   // --- OPERADORES POR BAR ---
@@ -131,6 +228,20 @@ export const saasApi = {
       return await res.json();
     } catch {
       return [];
+    }
+  },
+
+  async saveUsers(tenantId: string, users: TenantUser[]): Promise<TenantUser[]> {
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/users`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ users }),
+      });
+      if (!res.ok) return users;
+      return await res.json();
+    } catch {
+      return users;
     }
   },
 

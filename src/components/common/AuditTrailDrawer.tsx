@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   X,
   History,
@@ -11,7 +11,8 @@ import {
   ShieldCheck,
   Copy,
   Trash2,
-  FileSpreadsheet
+  FileSpreadsheet,
+  ChevronDown
 } from 'lucide-react';
 import { AuditLogEntry } from '../../types/saas.ts';
 
@@ -34,20 +35,32 @@ export const AuditTrailDrawer: React.FC<AuditTrailDrawerProps> = ({
 }) => {
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [visibleCount, setVisibleCount] = useState(40);
+
+  useEffect(() => {
+    setVisibleCount(40);
+  }, [filterCategory, searchTerm, isOpen]);
+
+  const filteredLogs = useMemo(() => {
+    const term = searchTerm.toLowerCase().trim();
+    return logs.filter((log) => {
+      const matchesCat = filterCategory === 'all' || log.category === filterCategory;
+      const matchesSearch =
+        !term ||
+        log.action.toLowerCase().includes(term) ||
+        log.details.toLowerCase().includes(term) ||
+        log.operator.toLowerCase().includes(term) ||
+        log.timestamp.includes(term);
+      return matchesCat && matchesSearch;
+    });
+  }, [logs, filterCategory, searchTerm]);
+
+  const visibleLogs = useMemo(
+    () => filteredLogs.slice(0, visibleCount),
+    [filteredLogs, visibleCount]
+  );
 
   if (!isOpen) return null;
-
-  const filteredLogs = logs.filter((log) => {
-    const matchesCat = filterCategory === 'all' || log.category === filterCategory;
-    const term = searchTerm.toLowerCase().trim();
-    const matchesSearch =
-      !term ||
-      log.action.toLowerCase().includes(term) ||
-      log.details.toLowerCase().includes(term) ||
-      log.operator.toLowerCase().includes(term) ||
-      log.timestamp.includes(term);
-    return matchesCat && matchesSearch;
-  });
 
   const getCategoryBadge = (cat: AuditLogEntry['category']) => {
     switch (cat) {
@@ -181,7 +194,7 @@ export const AuditTrailDrawer: React.FC<AuditTrailDrawerProps> = ({
           </div>
         </div>
 
-        {/* Linha do Tempo de Ações */}
+        {/* Linha do Tempo de Ações (Paginada) */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-950/40">
           {filteredLogs.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-slate-500 space-y-2">
@@ -192,35 +205,50 @@ export const AuditTrailDrawer: React.FC<AuditTrailDrawerProps> = ({
               </p>
             </div>
           ) : (
-            filteredLogs.map((log) => {
-              const badge = getCategoryBadge(log.category);
-              return (
-                <div
-                  key={log.id}
-                  className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs hover:border-slate-700 transition-colors shadow-xs"
-                >
-                  <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-                    <div className="flex items-center gap-2">
-                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold border ${badge.bg}`}>
-                        {badge.icon}
-                        <span>{badge.label}</span>
-                      </span>
-                      <span className="font-bold text-white text-xs">{log.action}</span>
+            <>
+              {visibleLogs.map((log) => {
+                const badge = getCategoryBadge(log.category);
+                return (
+                  <div
+                    key={log.id}
+                    className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs hover:border-slate-700 transition-colors shadow-xs"
+                  >
+                    <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                      <div className="flex items-center gap-2">
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold border ${badge.bg}`}>
+                          {badge.icon}
+                          <span>{badge.label}</span>
+                        </span>
+                        <span className="font-bold text-white text-xs">{log.action}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                        <span className="font-semibold text-slate-300 capitalize">
+                          {log.operator}
+                        </span>
+                        <span>•</span>
+                        <span className="font-mono text-slate-400">{log.timestamp}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] text-slate-400">
-                      <span className="font-semibold text-slate-300 capitalize">
-                        {log.operator}
-                      </span>
-                      <span>•</span>
-                      <span className="font-mono text-slate-400">{log.timestamp}</span>
-                    </div>
+                    <p className="text-slate-300 leading-relaxed font-medium bg-slate-950/50 p-2 rounded-lg border border-slate-800/80">
+                      {log.details}
+                    </p>
                   </div>
-                  <p className="text-slate-300 leading-relaxed font-medium bg-slate-950/50 p-2 rounded-lg border border-slate-800/80">
-                    {log.details}
-                  </p>
-                </div>
-              );
-            })
+                );
+              })}
+
+              {visibleCount < filteredLogs.length && (
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((prev) => prev + 40)}
+                  className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <ChevronDown className="w-4 h-4 text-orange-400" />
+                  <span>
+                    Carregar mais ({filteredLogs.length - visibleCount} restantes)
+                  </span>
+                </button>
+              )}
+            </>
           )}
         </div>
 

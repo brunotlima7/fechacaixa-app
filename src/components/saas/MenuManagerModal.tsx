@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { X, Plus, Trash2, Edit3, Check, Utensils, RotateCcw, Search, DollarSign, FileText, Timer } from 'lucide-react';
+import { X, Plus, Trash2, Edit3, Check, Utensils, Search, FileText, Timer } from 'lucide-react';
 import { Tenant, MenuItem, isHappyHourOrPromoItem } from '../../types/saas.ts';
-import { FLOR_DE_BRASA_MENU } from '../../data/defaultMenus.ts';
 import { PdfMenuImportModal } from './PdfMenuImportModal.tsx';
 
 interface MenuManagerModalProps {
@@ -22,11 +21,9 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
   onShowToast,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCat, setSelectedCat] = useState<string>('todos');
-  const [newItem, setNewItem] = useState<{ name: string; price: string; cat: string }>({
+  const [newItem, setNewItem] = useState<{ name: string; price: string }>({
     name: '',
     price: '',
-    cat: 'Petiscos',
   });
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editPrice, setEditPrice] = useState<string>('');
@@ -35,14 +32,26 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
 
   if (!isOpen) return null;
 
-  const categories = Array.from(new Set(menu.map((i) => i.cat))).filter(Boolean);
+  const normalizeSearchText = (str: string) =>
+    (str || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9.,\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  const normalizedQuery = normalizeSearchText(searchTerm);
+  const queryTokens = normalizedQuery ? normalizedQuery.split(' ').filter(Boolean) : [];
 
   const filteredMenuWithIndex = menu
     .map((item, originalIdx) => ({ item, originalIdx }))
     .filter(({ item }) => {
-      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCat = selectedCat === 'todos' || item.cat === selectedCat;
-      return matchesSearch && matchesCat;
+      if (queryTokens.length === 0) return true;
+      const itemPriceComma = Number(item.price || 0).toFixed(2).replace('.', ',');
+      const itemPriceDot = Number(item.price || 0).toFixed(2);
+      const searchableContent = `${normalizeSearchText(item.name)} ${itemPriceComma} ${itemPriceDot}`;
+      return queryTokens.every((token) => searchableContent.includes(token));
     });
 
   const handleAddItem = async (e: React.FormEvent) => {
@@ -59,14 +68,14 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
 
     const addedName = newItem.name.trim();
     const updated = [
-      { name: addedName, price: priceNum, cat: newItem.cat.trim() || 'Geral' },
+      { name: addedName, price: priceNum, cat: 'Geral' },
       ...menu,
     ];
 
     setIsSaving(true);
     try {
       await onSaveMenu(updated);
-      setNewItem({ name: '', price: '', cat: 'Petiscos' });
+      setNewItem({ name: '', price: '' });
       onShowToast(`Item "${addedName}" adicionado ao cardápio de ${tenant.name}!`);
     } catch {
       onShowToast('Erro ao salvar item.');
@@ -136,18 +145,6 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
       );
     } catch {
       onShowToast('Erro ao atualizar regra do item.');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleCloneFlorDeBrasa = async () => {
-    setIsSaving(true);
-    try {
-      await onSaveMenu([...FLOR_DE_BRASA_MENU]);
-      onShowToast('Cardápio do Flor de Brasa importado com sucesso!');
-    } catch {
-      onShowToast('Erro ao importar cardápio.');
     } finally {
       setIsSaving(false);
     }
@@ -230,20 +227,11 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
                   <Trash2 className="w-3.5 h-3.5 text-rose-600" /> Zerar Cardápio
                 </button>
               )}
-              <button
-                type="button"
-                onClick={handleCloneFlorDeBrasa}
-                disabled={isSaving}
-                className="text-xs font-bold bg-white hover:bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-300 shadow-sm flex items-center gap-1.5 transition-all cursor-pointer"
-                title="Importar template com 70+ itens do Flor de Brasa"
-              >
-                <RotateCcw className="w-3.5 h-3.5 text-orange-500" /> Template Flor de Brasa
-              </button>
             </div>
           </div>
 
           <form onSubmit={handleAddItem} className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
-            <div className="sm:col-span-5">
+            <div className="sm:col-span-6">
               <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Nome do Item / Prato</label>
               <input
                 type="text"
@@ -251,7 +239,7 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
                 value={newItem.name}
                 onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
                 placeholder="Ex: Isca de Tilápia com Molho Tártaro"
-                className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm font-semibold outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm font-semibold text-[#0f0f0f] outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
             <div className="sm:col-span-3">
@@ -264,55 +252,48 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
                   value={newItem.price}
                   onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
                   placeholder="39,90"
-                  className="w-full bg-white border border-slate-300 rounded-lg p-2.5 pl-8 text-xs sm:text-sm font-bold text-right outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full bg-white border border-slate-300 rounded-lg p-2.5 pl-8 text-xs sm:text-sm font-bold text-right text-[#010101] outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
             </div>
-            <div className="sm:col-span-2">
-              <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Categoria</label>
-              <input
-                type="text"
-                value={newItem.cat}
-                onChange={(e) => setNewItem({ ...newItem, cat: e.target.value })}
-                placeholder="Ex: Petiscos"
-                className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500"
-              />
-            </div>
-            <div className="sm:col-span-2">
+            <div className="sm:col-span-3">
               <button
                 type="submit"
                 disabled={isSaving}
-                className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white font-bold p-2.5 rounded-lg text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5"
+                className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white font-bold p-2.5 rounded-lg text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Plus className="w-4 h-4" /> Adicionar
               </button>
             </div>
           </form>
 
-          {/* Filters & Search */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+          {/* Search */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-2 items-stretch sm:items-center">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Buscar item pelo nome..."
-                className="w-full bg-white border border-slate-300 rounded-lg py-2 pl-9 pr-3 text-xs outline-none focus:ring-2 focus:ring-orange-500"
+                placeholder="Pesquisar item por nome ou preço (ex: chopp, água, 14,90)..."
+                className="w-full bg-white border border-slate-300 rounded-lg py-2 pl-9 pr-8 text-xs text-[#000000] outline-none focus:ring-2 focus:ring-orange-500"
               />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 rounded-full hover:bg-slate-200/60 cursor-pointer"
+                  title="Limpar pesquisa"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
-            <select
-              value={selectedCat}
-              onChange={(e) => setSelectedCat(e.target.value)}
-              className="bg-white border border-slate-300 rounded-lg py-2 px-3 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-orange-500"
-            >
-              <option value="todos">Todas as Categorias ({menu.length} itens)</option>
-              {categories.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
+            <span className="px-3 py-2 rounded-lg text-xs font-bold bg-slate-200/70 text-slate-700 shrink-0 text-center">
+              {searchTerm.trim()
+                ? `${filteredMenuWithIndex.length} de ${menu.length} itens`
+                : `Total: ${menu.length} itens`}
+            </span>
           </div>
         </div>
 
@@ -323,7 +304,6 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
               <thead>
                 <tr className="bg-slate-100 text-slate-500 uppercase tracking-wider text-[11px] font-bold">
                   <th className="p-3 border-b">Item</th>
-                  <th className="p-3 border-b">Categoria</th>
                   <th className="p-3 border-b text-right">Preço</th>
                   <th className="p-3 border-b text-right w-24">Ações</th>
                 </tr>
@@ -331,8 +311,21 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
               <tbody className="divide-y divide-slate-100">
                 {filteredMenuWithIndex.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="p-8 text-center text-slate-400 font-medium">
-                      Nenhum item cadastrado no cardápio deste bar. Adicione itens manualmente ou envie um PDF.
+                    <td colSpan={3} className="p-8 text-center text-slate-400 font-medium">
+                      {menu.length === 0 ? (
+                        'Nenhum item cadastrado no cardápio deste bar. Adicione itens manualmente ou envie um PDF.'
+                      ) : (
+                        <div className="space-y-2">
+                          <p>Nenhum item encontrado para "{searchTerm}".</p>
+                          <button
+                            type="button"
+                            onClick={() => setSearchTerm('')}
+                            className="text-orange-600 hover:text-orange-700 font-bold underline cursor-pointer"
+                          >
+                            Limpar pesquisa e mostrar todos ({menu.length})
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ) : (
@@ -361,11 +354,6 @@ export const MenuManagerModal: React.FC<MenuManagerModalProps> = ({
                             <span>{isPromo ? 'Happy Hour / Promo (Bloqueado)' : 'Liberado PDV'}</span>
                           </button>
                         </div>
-                      </td>
-                      <td className="p-3">
-                        <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-[11px] font-medium border border-slate-200">
-                          {item.cat}
-                        </span>
                       </td>
                       <td className="p-3 text-right font-bold text-slate-900">
                         {editingIndex === originalIdx ? (

@@ -16,7 +16,7 @@ import {
   FileCheck,
 } from 'lucide-react';
 import { MenuItem } from '../../types/saas.ts';
-import { extractPdfContent } from '../../utils/pdfExtractor.ts';
+import { extractPdfContent, parseMenuTextLocally } from '../../utils/pdfExtractor.ts';
 
 interface PdfMenuImportModalProps {
   isOpen: boolean;
@@ -135,7 +135,7 @@ export const PdfMenuImportModal: React.FC<PdfMenuImportModalProps> = ({
     }
   };
 
-  // Processa o PDF via IA Gemini com pré-otimização no navegador (Elimina HTTP 413)
+  // Processa o PDF via IA Gemini (com cascata multi-modelo + extrator local de backup zero-erro)
   const handleProcessPdf = async () => {
     if (!file && !fileBase64) {
       setErrorMessage('Nenhum arquivo PDF carregado para leitura.');
@@ -145,6 +145,8 @@ export const PdfMenuImportModal: React.FC<PdfMenuImportModalProps> = ({
     setIsProcessing(true);
     setErrorMessage(null);
     setProcessingStatus('Lendo e otimizando documento PDF no navegador...');
+
+    let extractedRawText = '';
 
     try {
       let endpoint = '/api/parse-menu-pdf';
@@ -162,16 +164,17 @@ export const PdfMenuImportModal: React.FC<PdfMenuImportModalProps> = ({
         }
 
         if (source) {
-          setProcessingStatus('Extraindo páginas e texto do cardápio...');
+          setProcessingStatus('Extraindo páginas e texto estruturado do cardápio...');
           const extracted = await extractPdfContent(source);
+          extractedRawText = extracted.text || '';
           if (extracted.hasText) {
             endpoint = '/api/parse-menu-text';
             payload.menuText = extracted.text;
-            setProcessingStatus('Texto do cardápio extraído! Enviando para a IA Gemini...');
+            setProcessingStatus('Texto extraído! Processando via Cascata IA Gemini...');
           } else if (extracted.pageImages && extracted.pageImages.length > 0) {
             endpoint = '/api/parse-menu-images';
             payload.pageImages = extracted.pageImages;
-            setProcessingStatus('Fotos das páginas escaneadas compactadas! Enviando para o Gemini...');
+            setProcessingStatus('Páginas escaneadas otimizadas! Enviando para Cascata IA Gemini...');
           } else {
             payload.pdfBase64 = fileBase64;
           }
@@ -183,7 +186,7 @@ export const PdfMenuImportModal: React.FC<PdfMenuImportModalProps> = ({
         payload.pdfBase64 = fileBase64;
       }
 
-      setProcessingStatus('Gemini 3.8 Flash estruturando itens, categorias e preços...');
+      setProcessingStatus('Estruturando itens, categorias e preços...');
 
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -199,7 +202,7 @@ export const PdfMenuImportModal: React.FC<PdfMenuImportModalProps> = ({
         const textResp = await res.text();
         console.error('Resposta não-JSON do servidor:', textResp.slice(0, 300));
         throw new Error(
-          `O servidor retornou código HTTP ${res.status}. O arquivo pode ter excedido os limites ou a API está indisponível.`
+          `O servidor retornou código HTTP ${res.status}.`
         );
       }
 
@@ -208,16 +211,34 @@ export const PdfMenuImportModal: React.FC<PdfMenuImportModalProps> = ({
       }
 
       if (!data.items || data.items.length === 0) {
-        throw new Error('Nenhum item com preço válido foi identificado no PDF.');
+        throw new Error('Nenhum item com preço válido foi identificado pela IA.');
       }
 
       setExtractedItems(data.items);
       setImportMode('replace');
-      // Seleciona todos os itens por padrão
       const allIdx = new Set<number>(data.items.map((_: MenuItem, idx: number) => idx));
       setSelectedIndices(allIdx);
-      onShowToast(`Sucesso! ${data.items.length} itens identificados no cardápio.`);
+      onShowToast(
+        data.usedFallback
+          ? `⚡ ${data.items.length} itens extraídos instantaneamente pelo extrator local de backup!`
+          : `Sucesso! ${data.items.length} itens identificados no cardápio.`
+      );
     } catch (err: any) {
+      // Camada 2 de Backup no Cliente: Se houver texto extraído do PDF e a IA estiver sob alta demanda (503), extrai localmente sem erro!
+      if (extractedRawText) {
+        const localBackupItems = parseMenuTextLocally(extractedRawText);
+        if (localBackupItems.length > 0) {
+          setExtractedItems(localBackupItems);
+          setImportMode('replace');
+          const allIdx = new Set<number>(localBackupItems.map((_: MenuItem, idx: number) => idx));
+          setSelectedIndices(allIdx);
+          setErrorMessage(null);
+          onShowToast(
+            `⚡ IA em alta demanda: ${localBackupItems.length} itens extraídos instantaneamente pelo motor local!`
+          );
+          return;
+        }
+      }
       setErrorMessage(err.message || 'Erro inesperado durante a extração por IA.');
     } finally {
       setIsProcessing(false);
